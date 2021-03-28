@@ -70,6 +70,8 @@ if (isset($_GET['sub_add_order']) && isset($_SESSION['cart_product']) && isset($
 
     unset($_SESSION['cart_MSKH']);
     unset($_SESSION['cart_product']);
+
+    $_SESSION['mess'] = "Thêm đơn hàng thành công!";
 }
 
 
@@ -99,7 +101,7 @@ if (isset($_GET['sub_add_customer'])) {
     $_SESSION['mess'] = "Thêm khách hàng thành công";
 }
 
-// // Edit
+// // Edit Customer
 
 if (isset($_GET['sub_edit_customer']) && isset($_GET['MSKH'])) {
 
@@ -121,7 +123,8 @@ if (isset($_GET['sub_edit_customer']) && isset($_GET['MSKH'])) {
     $_SESSION['mess'] = "Chỉnh sửa khách hàng thành công";
 }
 
-// // Delete 
+// // Delete Customer
+
 if (isset($_GET['sub_del_customer']) && isset($_GET['MSKH'])) {
     $MSKH = $_GET['MSKH'];
 
@@ -146,6 +149,8 @@ if (isset($_GET['sub_add_customer_address']) && isset($_GET['MSKH'])) {
     $temp_MaDC = mysqli_query($conn, $sql_MaDC);
     $MaDC = mysqli_fetch_assoc($temp_MaDC);
 
+    echo $MaDC['MaDC'];
+
     $_SESSION['mess'] = "Thêm địa chỉ thành công";
 }
 
@@ -160,6 +165,17 @@ if (isset($_GET['sub_del_customer_address']) && isset($_GET['MaDC'])) {
 }
 
 // Personnel
+// // Check Username 
+if (isset($_GET['check_username_personnel']) && isset($_GET['Username'])) {
+    $Username = $_GET['Username'];
+
+    $sql_edit = "SELECT * FROM `nhanvien` WHERE Username = '$Username'";
+    $result = mysqli_query($conn, $sql_edit);
+    if (mysqli_num_rows($result) == 1)
+        echo 1;
+    else
+        echo 0;
+}
 // // Edit Personnel
 
 if (isset($_GET['sub_edit_personnel']) && isset($_GET['MSNV'])) {
@@ -171,6 +187,8 @@ if (isset($_GET['sub_edit_personnel']) && isset($_GET['MSNV'])) {
 
     $sql_edit = "UPDATE `nhanvien` SET `HoTenNV` = '$name', `ChucVu` = '$position', `DiaChi` = '$address', `SoDienThoai` = '$n_phone' WHERE `nhanvien`.`MSNV` = '$MSNV'";
     mysqli_query($conn, $sql_edit);
+
+    $_SESSION['mess'] = "Chỉnh sửa nhân viên thành công";
 }
 
 // // Add Personnel
@@ -187,6 +205,8 @@ if (isset($_GET['sub_add_personnel'])) {
 
     $sql_add = "INSERT INTO `nhanvien` (`HoTenNV`, `ChucVu`, `DiaChi`, `SoDienThoai`, `Username`, `Password`) VALUES ('$name', '$position', '$address', '$n_phone', '$username', '$password')";
     mysqli_query($conn, $sql_add);
+
+    $_SESSION['mess'] = "Thêm nhân viên thành công";
 }
 
 // // Delete Personnel
@@ -195,6 +215,8 @@ if (isset($_GET['sub_del_personnel']) && isset($_GET['MSNV'])) {
 
     $sql_delete = "DELETE FROM `nhanvien` WHERE `nhanvien`.`MSNV` = '$MSNV'";
     mysqli_query($conn, $sql_delete);
+
+    $_SESSION['mess'] = "Xóa nhân viên thành công";
 }
 
 
@@ -207,6 +229,8 @@ if (isset($_GET['sub_edit_category']) && isset($_GET['MaLoaiHang'])) {
 
     $sql_edit = "UPDATE `loaihanghoa` SET `TenLoaiHang` = '$name' WHERE `loaihanghoa`.`MaLoaiHang` = '$MaLoaiHang'";
     mysqli_query($conn, $sql_edit);
+
+    $_SESSION['mess'] = "Chỉnh sửa loại hàng thành công";
 }
 
 // // Add Category
@@ -216,6 +240,8 @@ if (isset($_GET['sub_add_category'])) {
 
     $sql_add = "INSERT INTO `loaihanghoa` (`TenLoaiHang`) VALUES ('$name')";
     mysqli_query($conn, $sql_add);
+
+    $_SESSION['mess'] = "Thêm loại hàng thành công";
 }
 
 // // Delete Category
@@ -224,6 +250,8 @@ if (isset($_GET['sub_del_category']) && isset($_GET['MaLoaiHang'])) {
 
     $sql_delete = "DELETE FROM `loaihanghoa` WHERE `loaihanghoa`.`MaLoaiHang` = '$MaLoaiHang'";
     mysqli_query($conn, $sql_delete);
+
+    $_SESSION['mess'] = "Xóa loại hàng thành công";
 }
 
 // Product
@@ -249,10 +277,11 @@ if (isset($_GET['sub_edit_product']) && isset($_GET['MSHH'])) {
             `GhiChu` = '$description'
         WHERE `hanghoa`.`MSHH` = '$MSHH'";
     mysqli_query($conn, $sql_list_product_edit);
+
+    $_SESSION['mess'] = "Chỉnh sửa sản phẩm thành công";
 }
 
 // // Add Product
-
 
 if (isset($_GET['sub_add_product'])) {
     $name = $_GET['name'];
@@ -265,6 +294,8 @@ if (isset($_GET['sub_add_product'])) {
     $sql_list_product_add = "INSERT INTO `hanghoa` (`MSHH`, `TenHH`, `QuyCach`, `Gia`, `SoLuongHang`, `MaLoaiHang`, `GhiChu`) 
     VALUES (NULL, '$name', '$rule', '$price', '$quantity', '$category', '$description')";
     mysqli_query($conn, $sql_list_product_add);
+
+    $_SESSION['mess'] = "Thêm sản phẩm thành công";
 }
 
 // // Delete Product
@@ -273,4 +304,6 @@ if (isset($_GET['sub_del_product']) && isset($_GET['MSHH'])) {
 
     $sql_list_product_delete = "DELETE FROM `hanghoa` WHERE `hanghoa`.`MSHH` = '$MSHH'";
     mysqli_query($conn, $sql_list_product_delete);
+
+    $_SESSION['mess'] = "Xóa sản phẩm thành công";
 }

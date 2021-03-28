@@ -26,6 +26,7 @@ session_start();
         <hr />
         <li class="menu-item active" id="revenue">Thống kê</li>
         <li class="menu-item" id="order">Đơn hàng</li>
+        <li class="menu-item" id="customer">Khách hàng</li>
         <li class="menu-item" id="personnel">Nhân viên</li>
         <li class="menu-item" id="category">Loại hàng</li>
         <li class="menu-item" id="product">Hàng hóa</li>
@@ -62,7 +63,9 @@ session_start();
         $("#content").load("order.php");
       });
 
-
+      $("#customer").click(function(e) {
+        $("#content").load("customer.php");
+      });
 
       $("#personnel").click(function(e) {
         $("#content").load("personnel.php");

@@ -287,7 +287,7 @@ $result = mysqli_query($conn, $sql);
 <?php if (isset($_SESSION['mess'])) {
     echo '<span class="message-overlay"></span>';
     echo '<span class="message">' . $_SESSION['mess'] . '</span>';
-    $_SESSION['mess'] = NULL;
+    unset($_SESSION['mess']);
 } ?>
 <div class="row">
     <div class="col">
@@ -368,25 +368,25 @@ $result = mysqli_query($conn, $sql);
             <div class="row form-item align-items-center">
                 <input class="form-input name" type="text" id="name-add" placeholder="Tên khách hàng" />
             </div>
-            <div class="row error error_name" id=""></div>
+            <div class="row error error_name"></div>
             <div class="row form-item align-items-center">
                 <input class="form-input company" type="text" id="company-add" placeholder="Tên công ty" value="" />
             </div>
-            <div class="row error error_company" id=""></div>
+            <div class="row error error_company"></div>
 
             <div class="row form-item align-items-center">
                 <input class="form-input n_phone" type="text" id="n_phone-add" placeholder="Số điện thoại" value="" />
             </div>
-            <div class="row error error_n_phone" id=""></div>
+            <div class="row error error_n_phone"></div>
 
             <div class="row form-item align-items-center">
                 <input class="form-input email" type="text" id="email-add" placeholder="Email" value="" />
             </div>
-            <div class="row error error_email" id=""></div>
+            <div class="row error error_email"></div>
             <div class="row form-item align-items-center">
                 <textarea class="address" id="address-add" placeholder="Địa chỉ" rows="3"></textarea>
             </div>
-            <div class="row error error_address" id=""></div>
+            <div class="row error error_address"></div>
             <div class="row justify-content-center">
                 <div class="col-md-7">
                     <button type="submit" class="form-submit" id="save-add">Thêm</button>
@@ -423,19 +423,19 @@ if (isset($_POST['edit_customer']) && isset($_POST['id'])) {
                     <input class="form-input name" type="text" id="name" placeholder="Tên khách hàng" value="<?php echo $data_detail['HoTenKH'] ?>" />
                     <input type="hidden" name="MSKH" id="MSKH" value="<?php echo $data_detail['MSKH'] ?>" />
                 </div>
-                <div class="row error error_name" id=""></div>
+                <div class="row error error_name"></div>
                 <div class="row form-item align-items-center">
                     <input class="form-input company" type="text" id="company" placeholder="Tên công ty" value="<?php echo $data_detail['TenCongTy'] ?>" />
                 </div>
-                <div class="row error error_company" id=""></div>
+                <div class="row error error_company"></div>
                 <div class="row form-item align-items-center">
                     <input class="form-input n_phone" type="text" id="n_phone" placeholder="Số điện thoại" value="<?php echo $data_detail['SoDienThoai'] ?>" />
                 </div>
-                <div class="row error error_n_phone" id=""></div>
+                <div class="row error error_n_phone"></div>
                 <div class="row form-item align-items-center">
                     <input class="form-input email" type="text" id="email" placeholder="Email" value="<?php echo $data_detail['Email'] ?>" />
                 </div>
-                <div class="row error error_email" id=""></div>
+                <div class="row error error_email"></div>
                 <div class="row form-item align-items-center">
                     <div class="col list-personnel">
                         <div class="row">

@@ -34,7 +34,7 @@ $result = mysqli_query($conn, $sql);
 
           $("#content").html(data);
           $(".form-edit").show(500);
-          $(".form-layout").show(500);
+          $(".form-layout").show();
         }
       );
     });
@@ -96,7 +96,7 @@ $result = mysqli_query($conn, $sql);
             <th scope="col">Tên nhân viên</th>
             <th scope="col">Ngày đặt hàng</th>
             <th scope="col">Ngày giao</th>
-            <th scope="col">Tùy chọn</th>
+            <th scope="col">Chi tiết</th>
           </tr>
         </thead>
         <tbody>
@@ -109,7 +109,7 @@ $result = mysqli_query($conn, $sql);
               <td><?php echo $key['NgayGH'] ?></td>
               <td>
                 <span class="order-detail" SoDonDH="<?php echo $key['SoDonDH'] ?>">
-                  <i class="fas fa-minus form-icon"></i>
+                  <i class="fas fa-ellipsis-h form-icon"></i>
                 </span>
               </td>
             </tr>
@@ -166,7 +166,7 @@ if (isset($_POST['order_detail']) && isset($_POST['id'])) {
               <?php foreach ($data_product as $key) : ?>
                 <div class="row align-items-center">
                   <div class="col-6">
-                    <span class="row order-detail__list-product--title"><?php echo $key['TenHH'] ?>sadfhasgdfjksak sjhgfd jsagjhd jsahgdfjhasg djh</span>
+                    <span class="row order-detail__list-product--title"><?php echo $key['TenHH'] ?></span>
                   </div>
                   <div class="col-2">
                     <span class="order-detail__list-product--quantity">x<?php echo $key['SoLuong'] ?></span>
@@ -186,8 +186,8 @@ if (isset($_POST['order_detail']) && isset($_POST['id'])) {
       </div>
       <div class="row">
         <div class="col order-detail__list-product--total">
-          <span>Giá trị đơn hàng</span>
-          <span><?php echo $sum ?></span>
+          <span>Giá trị đơn hàng: </span>
+          <span><?php echo $sum ?> $</span>
         </div>
       </div>
     </div>
