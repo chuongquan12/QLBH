@@ -32,6 +32,7 @@ if (!isset($_SESSION['MSNV'])) {
         <h4 class="menu-title">NHÂN VIÊN</h4>
         <hr />
         <li class="menu-item active" id="create-order">Thêm đơn hàng</li>
+        <li class="menu-item" id="order">Đơn hàng</li>
         <li class="menu-item" id="customer">Khách hàng</li>
         <li class="menu-item" id="product">Hàng hóa</li>
       </div>
@@ -62,6 +63,10 @@ if (!isset($_SESSION['MSNV'])) {
 
       $("#create-order").click(function(e) {
         $("#content").load("create-order.php");
+      });
+
+      $("#order").click(function(e) {
+        $("#content").load("order.php");
       });
 
       $("#customer").click(function(e) {

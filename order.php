@@ -25,7 +25,6 @@ $result = mysqli_query($conn, $sql);
     $(".order-detail").click(function() {
       var SoDonDH = $(this).attr("SoDonDH");
 
-      console.log(SoDonDH)
       $.post("order.php", {
           id: SoDonDH,
           order_detail: true

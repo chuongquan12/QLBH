@@ -50,7 +50,7 @@ if (isset($_GET['sub_add_order']) && isset($_SESSION['cart_product']) && isset($
 
     mysqli_query($conn, $sql_add);
 
-    $sql_SoDonDH = "SELECT * FROM `dathang` WHERE MSKH='$MSKH' && MSNV='$MSNV' && NgayDH='$today'";
+    $sql_SoDonDH = "SELECT * FROM `dathang` WHERE MSKH='$MSKH' && MSNV='$MSNV' && NgayDH='$today' ORDER BY SoDonDH DESC";
     $temp = mysqli_query($conn, $sql_SoDonDH);
     $result = mysqli_fetch_assoc($temp);
     $SoDonDH = $result['SoDonDH'];
@@ -306,4 +306,74 @@ if (isset($_GET['sub_del_product']) && isset($_GET['MSHH'])) {
     mysqli_query($conn, $sql_list_product_delete);
 
     $_SESSION['mess'] = "Xóa sản phẩm thành công";
+}
+
+// Revenue
+if (isset($_GET['add_revenue'])) {
+
+    $today = date("Y-m-d");
+
+    $product = $_GET['product'];
+    $order = $_GET['order'];
+    $revenue = $_GET['revenue'];
+
+    $sql = "INSERT INTO `doanhthu` (`Ngay`, `DoanhThu`, `SoDonHang`, `SoSanPham`) VALUES ('$today', '$revenue', '$order', '$product')";
+    mysqli_query($conn, $sql);
+
+    $_SESSION['mess'] = "Đóng ca thành công";
+}
+
+// Chart
+// // Product Chart
+if (isset($_GET['data_product_chart'])) {
+    header('Content-Type: application/json');
+    $today = date("Y-m-d");
+
+    $result_product_day = array();
+    $sql_category = "SELECT * FROM `loaihanghoa`";
+    $result_category = mysqli_query($conn, $sql_category);
+    foreach ($result_category as $key) :
+        $sql_product_day = "SELECT  TenLoaiHang, SUM(SoLuong) as SoLuong
+                      FROM `chitietdathang`, `dathang`, `loaihanghoa`, `hanghoa` 
+                      WHERE chitietdathang.SoDonDH = dathang.SoDonDH && 
+                            chitietdathang.MSHH = hanghoa.MSHH && 
+                            hanghoa.MaLoaiHang = loaihanghoa.MaLoaiHang && 
+                            NgayDH = '$today' && 
+                            loaihanghoa.MaLoaiHang = " . $key['MaLoaiHang'];
+        $temp_product_day = mysqli_query($conn, $sql_product_day);
+        $product_day = mysqli_fetch_assoc($temp_product_day);
+        $result_product_day[] = $product_day;
+    endforeach;
+
+    echo json_encode($result_product_day);
+}
+
+// // Revenue Chart
+if (isset($_GET['data_revenue_chart'])) {
+    header('Content-Type: application/json');
+    $today = date("Y-m-d");
+
+    $result_revenue = array();
+    $sql_revenue = "SELECT Ngay, DoanhThu FROM `doanhthu` ORDER BY Ngay DESC LIMIT 7";
+    $temp_revenue = mysqli_query($conn, $sql_revenue);
+    foreach ($temp_revenue as $key) :
+        $result_revenue[] = $key;
+    endforeach;
+
+    echo json_encode($result_revenue);
+}
+
+// // Product Order Chart
+if (isset($_GET['data_product_order_chart'])) {
+    header('Content-Type: application/json');
+    $today = date("Y-m-d");
+
+    $result_product_order = array();
+    $sql_product_order = "SELECT Ngay, SoSanPham, SoDonHang FROM `doanhthu` ORDER BY Ngay DESC LIMIT 7";
+    $temp_product_order = mysqli_query($conn, $sql_product_order);
+    foreach ($temp_product_order as $key) :
+        $result_product_order[] = $key;
+    endforeach;
+
+    echo json_encode($result_product_order);
 }
